@@ -1,0 +1,1 @@
+DATABASE_PATH = "Ruido_diario_acumulado.csv"
