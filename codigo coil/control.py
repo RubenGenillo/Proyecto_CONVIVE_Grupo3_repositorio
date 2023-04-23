@@ -5,12 +5,12 @@ import config as cfg
 df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
 
 class Informacion:
-    def __init__(self, ID, NMT, mes, dia, anio, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
+    def __init__(self, ID, NMT, anio ,mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
         self.ID = ID
         self.NMT = NMT
+        self.anio = anio
         self.mes = mes
         self.dia = dia
-        self.anio = anio
         self.LAEQ = LAEQ
         self.LAS01 = LAS01
         self.LAS10 = LAS10
@@ -23,15 +23,15 @@ class Informacion:
         self.tipo_T = tipo_T
 
     def __str__(self):
-        return f"ID: {self.ID}, NMT: {self.NMT}, mes: {self.mes}, dia: {self.dia}, año: {self.anio}, LAEQ: {self.LAEQ}, LAS01: {self.LAS01}, LAS10: {self.LAS10}, LAS50: {self.LAS50}, LAS90: {self.LAS90}, LAS99: {self.LAS99}, tipo_D: {self.tipo_D}, tipo_E: {self.tipo_E}, tipo_N: {self.tipo_N}, tipo_T: {self.tipo_T}"
+        return f"ID: {self.ID}, NMT: {self.NMT}, año: {self.anio}, mes: {self.mes}, dia: {self.dia}, LAEQ: {self.LAEQ}, LAS01: {self.LAS01}, LAS10: {self.LAS10}, LAS50: {self.LAS50}, LAS90: {self.LAS90}, LAS99: {self.LAS99}, tipo_D: {self.tipo_D}, tipo_E: {self.tipo_E}, tipo_N: {self.tipo_N}, tipo_T: {self.tipo_T}"
     
     def to_dict(self):
         return {
             'ID': self.ID,
             'NMT': self.NMT,
+            'año': self.anio,
             'mes': self.mes,
             'dia': self.dia,
-            'año': self.año,
             'LAEQ': self.LAEQ,
             'LAS01': self.LAS01,
             'LAS10': self.LAS10,
@@ -45,23 +45,36 @@ class Informacion:
         }
     
 
-def añadir_fila(NMT, mes, dia, anio, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
-    nueva_fila = Informacion(NMT, mes, dia, anio, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T)
-    df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
-    df = df.append(nueva_fila.to_dict(), ignore_index=True)
-    df.to_csv(cfg.DATABASE_PATH, index=False)
+def añadir_fila(NMT, anio, mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
+    new_id = df['ID'].max() + 1
+    nueva_fila = {'ID': new_id, 'NMT': NMT, 'anio': anio, 'mes': mes, 'dia': dia, 'LAEQ': LAEQ,
+                  'LAS01': LAS01, 'LAS10': LAS10, 'LAS50': LAS50, 'LAS90': LAS90, 'LAS99': LAS99,
+                  'tipo_D': tipo_D, 'tipo_E': tipo_E, 'tipo_N': tipo_N, 'tipo_T': tipo_T}
+    df.loc[new_id] = nueva_fila
+    df.to_csv(cfg.DATABASE_PATH, index=False, sep=';')
 
 def eliminar_fila(ID):
     df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
-    df = df.drop(ID)
+    df = df[df['ID'] != ID]
     df.to_csv(cfg.DATABASE_PATH, index=False)
 
-def modificar_fila(ID, NMT, mes, dia, anio, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
+def eliminar_filas(IDs):
+    df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
+    for ID in IDs:
+        df = df[df['ID'] != ID]
+    df.to_csv(cfg.DATABASE_PATH, index=False)
+
+def eliminar_ultima_fila():
+    df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
+    df = df.drop(df.tail(1).index)
+    df.to_csv(cfg.DATABASE_PATH, index=False)
+
+def modificar_fila(ID, NMT, anio, mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
     df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
     df.loc[ID, 'NMT'] = NMT
+    df.loc[ID, 'anio'] = anio
     df.loc[ID, 'mes'] = mes
     df.loc[ID, 'dia'] = dia
-    df.loc[ID, 'anio'] = anio
     df.loc[ID, 'LAEQ'] = LAEQ
     df.loc[ID, 'LAS01'] = LAS01
     df.loc[ID, 'LAS10'] = LAS10
@@ -81,9 +94,13 @@ def mostrar_fila(ID):
     print(df.loc[ID])
 
 def main():
-    #Mostrar fila 200
+    #Mostrar fila 1
     mostrar_fila(1)
-    #Modificar fila 200
+    #Añadir fila
+    # añadir_fila(3, 2014, 1, 1, 57.4, 66.6, 61.1, 54.3, 49.1, 45.1, 1.0, 0.0, 0.0, 0.0)
+    # eliminar_ultima_fila()
+    eliminar_fila(393252)
+    #Modificar fila 1
     # modificar_fila(1, 3, 2014, 1, 1, 57.4, 66.6, 61.1, 54.3, 49.1, 45, 0.0, 0.0, 0.0, 1.0)
     # mostrar_fila(1)
 
