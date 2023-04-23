@@ -1,1 +1,1 @@
-DATABASE_PATH = "Ruido_diario_acumulado.csv"
+DATABASE_PATH = "codigo coil/Ruido_diario_id_acumulado.csv"
