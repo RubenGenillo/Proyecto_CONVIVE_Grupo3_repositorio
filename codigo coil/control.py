@@ -46,16 +46,16 @@ class Informacion:
     
 
 def añadir_fila(NMT, anio, mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
-    nueva_fila = Informacion(None, NMT, anio, mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T)
-    df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
     new_id = df['ID'].max() + 1
-    nueva_fila.ID = new_id
-    df = pd.concat([df, pd.DataFrame([nueva_fila.to_dict()])], ignore_index=True)
+    nueva_fila = {'ID': new_id, 'NMT': NMT, 'anio': anio, 'mes': mes, 'dia': dia, 'LAEQ': LAEQ,
+                  'LAS01': LAS01, 'LAS10': LAS10, 'LAS50': LAS50, 'LAS90': LAS90, 'LAS99': LAS99,
+                  'tipo_D': tipo_D, 'tipo_E': tipo_E, 'tipo_N': tipo_N, 'tipo_T': tipo_T}
+    df.loc[new_id] = nueva_fila
     df.to_csv(cfg.DATABASE_PATH, index=False, sep=';')
 
 def eliminar_fila(ID):
     df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
-    df = df.drop(ID)
+    df = df[df['ID'] != ID]
     df.to_csv(cfg.DATABASE_PATH, index=False)
 
 def modificar_fila(ID, NMT, anio, mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
