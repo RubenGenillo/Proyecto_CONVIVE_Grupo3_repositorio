@@ -14,5 +14,7 @@ df_modificado = df.join(df_ohe, rsuffix='_ohe').drop(['tipo'], axis=1)
 # Agregar una columna de ID
 df_modificado.insert(0, 'ID', range(1, 1+len(df_modificado)))
 
+print(df.isna().any().sum())
+print(df.isnull().any().sum())
 # Guardar el csv modificado con la columna de ID
 df_modificado.to_csv('codigo coil/Ruido_diario_acumulado_id_modificado.csv', sep=';', index=False)
