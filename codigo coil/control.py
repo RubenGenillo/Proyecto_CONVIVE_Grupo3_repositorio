@@ -4,47 +4,6 @@ import config as cfg
 # Cargar el csv
 df = pd.read_csv(cfg.DATABASE_PATH, sep=';')
 
-class Informacion:
-    def __init__(self, ID, NMT, anio ,mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
-        self.ID = ID
-        self.NMT = NMT
-        self.anio = anio
-        self.mes = mes
-        self.dia = dia
-        self.LAEQ = LAEQ
-        self.LAS01 = LAS01
-        self.LAS10 = LAS10
-        self.LAS50 = LAS50
-        self.LAS90 = LAS90
-        self.LAS99 = LAS99
-        self.tipo_D = tipo_D
-        self.tipo_E = tipo_E
-        self.tipo_N = tipo_N
-        self.tipo_T = tipo_T
-
-    def __str__(self):
-        return f"ID: {self.ID}, NMT: {self.NMT}, año: {self.anio}, mes: {self.mes}, dia: {self.dia}, LAEQ: {self.LAEQ}, LAS01: {self.LAS01}, LAS10: {self.LAS10}, LAS50: {self.LAS50}, LAS90: {self.LAS90}, LAS99: {self.LAS99}, tipo_D: {self.tipo_D}, tipo_E: {self.tipo_E}, tipo_N: {self.tipo_N}, tipo_T: {self.tipo_T}"
-    
-    def to_dict(self):
-        return {
-            'ID': self.ID,
-            'NMT': self.NMT,
-            'año': self.anio,
-            'mes': self.mes,
-            'dia': self.dia,
-            'LAEQ': self.LAEQ,
-            'LAS01': self.LAS01,
-            'LAS10': self.LAS10,
-            'LAS50': self.LAS50,
-            'LAS90': self.LAS90,
-            'LAS99': self.LAS99,
-            'tipo_D': self.tipo_D,
-            'tipo_E': self.tipo_E,
-            'tipo_N': self.tipo_N,
-            'tipo_T': self.tipo_T
-        }
-    
-
 def añadir_fila(NMT, anio, mes, dia, LAEQ, LAS01, LAS10, LAS50, LAS90, LAS99, tipo_D, tipo_E, tipo_N, tipo_T):
     new_id = df['ID'].max() + 1
     nueva_fila = {'ID': new_id, 'NMT': NMT, 'anio': anio, 'mes': mes, 'dia': dia, 'LAEQ': LAEQ,
