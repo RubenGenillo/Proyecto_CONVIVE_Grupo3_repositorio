@@ -52,14 +52,14 @@ def mostrar_fila(ID):
 
 def main():
     #Mostrar fila 1
-    mostrar_fila(1)
+    #mostrar_fila(1)
     #Añadir fila
-    # añadir_fila(3, 2014, 1, 1, 57.4, 66.6, 61.1, 54.3, 49.1, 45.1, 1.0, 0.0, 0.0, 0.0)
+    añadir_fila(3, 2014, 1, 1, 57.4, 66.6, 61.1, 54.3, 49.1, 45.1, 1.0, 0.0, 0.0, 0.0)
     # eliminar_ultima_fila()
     # eliminar_fila(393252)
     #Modificar fila 1
-    # modificar_fila(1, 3, 2014, 1, 1, 57.4, 66.6, 61.1, 54.3, 49.1, 45, 0.0, 0.0, 0.0, 1.0)
-    # mostrar_fila(1)
+    #modificar_fila(1, 3, 2014, 1, 1, 57.4, 66.6, 61.1, 54.3, 49.1, 45, 0.0, 0.0, 0.0, 1.0)
+    #mostrar_fila(1)
 
 if __name__ == '__main__':
     main()
