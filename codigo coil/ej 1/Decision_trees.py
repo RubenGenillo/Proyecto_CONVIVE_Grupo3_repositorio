@@ -35,7 +35,7 @@ print('Precisión del modelo: ', accuracy_score(y_test, y_pred))
 # Mostrar las importancias de cada variable
 importances = model.feature_importances_
 
-# hacer grafico por bigotes
+# Mostrar las importancias de cada variable en un gráfico de cajas
 plt.boxplot(importances)
 
 # Mostrar el gráfico
