@@ -34,10 +34,3 @@ importances = model_2.feature_importances_
 
 #Calcular la profundidad del arbol generado
 print('Profundidad del arbol: ', model_2.get_booster().get_dump()[0].count('\t'))
-
-
-# Mostrar las importancias de cada variable en un gráfico de cajas
-# plt.boxplot(importances)
-
-# Mostrar el gráfico
-# plt.show()
